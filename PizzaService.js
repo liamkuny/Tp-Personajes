@@ -1,18 +1,24 @@
 import sql from 'mssql';
 import configDB from '../models/configDB.js';
 
-
 export const getList=async()=>
 {
   const conn = await sql.connect(configDB);
-  const results = await conn.request().input("pNombre"= nombre, "pImagen", imagen, "pId", id).query('SELECT id,imagen,nombre FROM Personajes');
+  const results = await conn.request().query('SELECT id,imagen,nombre FROM Personajes ');
+  return results.recordset;
+}
+
+export const getDetailsbyId=async()=>
+{
+  const conn = await sql.connect(configDB);
+  const results = await conn.request().input( "pId", id).query('SELECT * FROM Personajes WHERE @pId=id' ); //inner join
   return results.recordset;
 }
 
 
 export const getByNameAgeMovie = async () => {
     const conn = await sql.connect(configDB);
-    const results = await conn.request().input("pNombre"= nombre, "pEdad", edad, "pPelicula", pelicula).query('SELECT * FROM Personajes WHERE @pNombre =nombre AND @pEdad=edad AND ');
+    const results = await conn.request().input("pNombre"= nombre, "pEdad", edad, "pPelicula", peliculaAsociada).query('SELECT * FROM Personajes WHERE @pNombre =nombre || @pEdad=edad || @pPelicula= peliculaAsociada');
     return results.recordset;
 }
 
