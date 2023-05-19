@@ -6,6 +6,5 @@ class Personaje
         edad;
         peso;
         historia;
-        peliculaOserie;
 }
  export default Personaje

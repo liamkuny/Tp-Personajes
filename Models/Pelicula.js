@@ -4,7 +4,6 @@ class Pelicula {
     titulo;
     fechaCreacion;
     calificacion;
-    personajesAsociados;
 }
 
 export default Pelicula
