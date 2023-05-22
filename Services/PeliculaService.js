@@ -8,10 +8,10 @@ export const getList=async()=>
   return results.recordset;
 }
 
-export const getDetailsbyId=async()=>
+export const getDetailsbyId=async(id)=>
 {
   const conn = await sql.connect(configDB);
-  const results = await conn.request().input( "pId", id).query('SELECT * FROM Peliculas WHERE @pId=id' ); //inner join
+  const results = await conn.request().input( "pId", id).query('SELECT * FROM Peliculas INNER JOIN TablaRelacional on Pelciculas.id=id_peliculas WHERE @pId=id' );
   return results.recordset;
 }
 
@@ -32,7 +32,7 @@ export const insert = async (pelicula) => {
 
 export const updateById = async (id, pelicula) => {
   const conn = await sql.connect(configDB);
-  const results = await conn.request() 
+  const results = await conn.request().input("pId", id) 
   .input( "pImagen", sql.VarChar, pelicula.imagen)
   .input( "pTitulo", sql.VarChar, pelicula.titulo)
   .input("pFechaCreacion", sql.Int, pelicula.fechaCreacion)
