@@ -2,10 +2,10 @@
     "name": "app",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "server.js",
     "type": "module",
     "scripts": {
-        "start:juli": "node ./src/index.js"
+        "start:": "node ./Server/Server.js"
     },
     "author": "",
     "license": "ISC",
