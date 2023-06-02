@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import { Personajes } from '../Services/Personajes.js';
+import { PersonajeService } from '../Services/PersonajeService.js';
 
 const router = Router();
-const Personajes = new Personajes();
+const Personajes = new PersonajeService();
 
 router.get('', async (req, res) => {
-  const personajes = await Personajes.getList();
-  return res.status(200).json(personajes);
+  const person = await Personajes.getList();
+  return res.status(200).json(person);
 });
 
 router.get('/:id', async (req, res) => {

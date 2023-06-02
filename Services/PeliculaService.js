@@ -1,14 +1,16 @@
 import sql from 'mssql';
 import configDB from '../Models/configDB.js';
 
-export const getList=async()=>
+
+export class PeliculaService {
+ getList=async()=>
 {
   const conn = await sql.connect(configDB);
   const results = await conn.request().query('SELECT id,imagen,titulo,fechaCreacion FROM Peliculas');
   return results.recordset;
 }
 
-export const getDetailsbyId=async(id)=>
+ getDetailsbyId=async(id)=>
 {
   const conn = await sql.connect(configDB);
   const results = await conn.request().input( "pId", id).query('SELECT * FROM Peliculas INNER JOIN TablaRelacional on Pelciculas.id=id_peliculas WHERE @pId=id' );
@@ -16,7 +18,7 @@ export const getDetailsbyId=async(id)=>
 }
 
 
-export const insert = async (pelicula) => {
+ insert = async (pelicula) => {
   const conn = await sql.connect(configDB);
   const results = await conn.request() 
   .input( "pImagen", sql.VarChar, pelicula.imagen)
@@ -30,7 +32,7 @@ export const insert = async (pelicula) => {
 
 
 
-export const updateById = async (id, pelicula) => {
+ updateById = async (id, pelicula) => {
   const conn = await sql.connect(configDB);
   const results = await conn.request().input("pId", id) 
   .input( "pImagen", sql.VarChar, pelicula.imagen)
@@ -42,10 +44,11 @@ export const updateById = async (id, pelicula) => {
 }
 
 
-export const deleteById = async (id) => {
+deleteById = async (id) => {
   const conn = await sql.connect(configDB);
   const results = await conn.request().input("pId", id).query('DELETE FROM Peliculas WHERE @pId = id');
 
   return results;
 }
 
+}

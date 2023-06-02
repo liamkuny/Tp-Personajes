@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { Pelicula } from '../Models/Pelicula.js';
+import { PeliculaService } from '../Services/PeliculaService.js';
 
 
 const router = Router();
-const pelicula = new Pelicula();
+const pelicula = new PeliculaService();
 
 router.get('', async (req, res) => {
   const peliculas = await pelicula.getList();

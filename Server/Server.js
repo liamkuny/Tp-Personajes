@@ -1,7 +1,7 @@
 import  express  from "express";
 import cors from "cors";
-import PersonajeRouter from "../Controllers/PersonajeController"
-import PeliculaRouter from "../Controllers/PeliculaController"
+import PersonajeRouter from "../Controllers/PersonajeController.js"
+import PeliculaRouter from "../Controllers/PeliculaController.js"
 import passport from "passport"   //inicio
 
 
@@ -12,6 +12,7 @@ const port=5000;
 app.use(cors());
 app.use(express.json());
 app.use("/characters", PersonajeRouter);
+app.use("/movies", PeliculaRouter);
 
 
 /*
