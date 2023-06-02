@@ -1,11 +1,12 @@
 import { Router } from 'express';
-import { PeliculaService } from '../Services/PeliculaService.js';
+import { Pelicula } from '../Models/Pelicula.js';
+
 
 const router = Router();
-const peliculaService = new PeliculaService();
+const pelicula = new Pelicula();
 
 router.get('', async (req, res) => {
-  const peliculas = await peliculaService.getList();
+  const peliculas = await pelicula.getList();
   return res.status(200).json(peliculas);
   
 });
@@ -16,7 +17,7 @@ router.get('/:id', async (req, res) => {
     {
         res.status(400).send()
     }
-    const per = await peliculaService.getDetailsbyId(req.params.id);
+    const per = await pelicula.getDetailsbyId(req.params.id);
      if(personajeId[0]==null)
      {
         res.status(404).send()
@@ -25,7 +26,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('', async (req, res) => {
-  const peliculas = await peliculaService.insert(req.body);
+  const peliculas = await pelicula.insert(req.body);
   return res.status(201).json(peliculas);
 });
 
@@ -35,7 +36,7 @@ router.put('/:id', async (req, res) => {
   {
     res.status(400).send()
   }
-  const peliculaCambiada = await peliculaService.updateById(req.body);
+  const peliculaCambiada = await pelicula.updateById(req.body);
   if(peliculaCambiada.rowsAffected[0]==0)
   {
       res.status(404).send()
@@ -50,7 +51,7 @@ router.delete('/:id', async (req, res) => {
   {
       res.status(400).send()
   }
-  const peliculaEliminada = await peliculaService.deleteById(req.params.id);
+  const peliculaEliminada = await pelicula.deleteById(req.params.id);
 
   if(peliculaEliminada.rowsAffected[0]==0)
   {

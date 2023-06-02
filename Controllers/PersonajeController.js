@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import { PersonajeService } from '../Services/PersonajeService.js';
+import { Personajes } from '../Services/Personajes.js';
 
 const router = Router();
-const PersonajeService = new PersonajeService();
+const Personajes = new Personajes();
 
 router.get('', async (req, res) => {
-  const personajes = await PersonajeService.getList();
+  const personajes = await Personajes.getList();
   return res.status(200).json(personajes);
 });
 
@@ -15,7 +15,7 @@ router.get('/:id', async (req, res) => {
     {
         res.status(400).send()
     }
-    const personajesId = await PersonajeService.getDetailsbyId(id);
+    const personajesId = await Personajes.getDetailsbyId(id);
      if(personajesId[0]==null)
      {
         res.status(404).send()
@@ -25,7 +25,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('', async (req, res) => {
-  const personajes = await PersonajeService.insert(req.body);
+  const personajes = await Personajes.insert(req.body);
   return res.status(201).json(personajes);
 });
 
@@ -35,7 +35,7 @@ router.put('/:id', async(req, res) => {
   {
     res.status(400).send()
   }
-  const personajeCambiado = await PersonajeService.updateById(req.body);
+  const personajeCambiado = await Personajes.updateById(req.body);
   if(personajeCambiado.rowsAffected[0]==0)
   {
       res.status(404).send()
@@ -50,7 +50,7 @@ router.delete('/:id', async (req, res) => {
   {
       res.status(400).send()
   }
-  const personajesEliminado = await PersonajeService.deleteById(req.params.id);
+  const personajesEliminado = await Personajes.deleteById(req.params.id);
 
   if(personajesEliminado.rowsAffected[0]==0)
   {

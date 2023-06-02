@@ -1,5 +1,5 @@
 import sql from 'mssql';
-import configDB from '../models/configDB.js';
+import configDB from '../Models/configDB.js';
 
 export const getList=async()=>
 {
