@@ -10,7 +10,7 @@ export class PersonajeService {
 
   getDetailsbyId = async (id) => {
     const conn = await sql.connect(configDB);
-    const results = await conn.request().input("pId", id).query('SELECT * FROM Personajes INNER JOIN TablaRelacional on Personajes.id=id_personajes WHERE @pId=id');
+    const results = await conn.request().input("pId", id).query('SELECT * FROM Personajes INNER JOIN TablaRelacional on Personajes.id=id_personajes WHERE @pId=id');  //arreglar
     return results.recordset;
   }
 
@@ -29,7 +29,7 @@ export class PersonajeService {
       .input("pEdad", sql.Int, personaje.edad)
       .input("pPeso", sql.Float, personaje.peso)
       .input("pHistoria", sql.VarChar, personaje.hisotria)
-      .query('INSERT INTO Personajes (nombre, edad, imagen, peso) VALUES (@pNombre, @pEdad, @pImagen, @pPeso)');
+      .query('INSERT INTO Personajes (nombre, edad, imagen, peso, historia) VALUES (@pNombre, @pEdad, @pImagen, @pPeso, @pHistoria)');
 
     return results.recordset;
   }
@@ -43,7 +43,8 @@ export class PersonajeService {
       .input("pEdad", sql.Int, personaje.edad)
       .input("pImagen", sql.VarChar, personaje.imagen)
       .input("pPeso", sql.Float, personaje.peso)
-      .query('UPDATE Personajes SET nombre = @pNombre, edad = @pEdad, imagen = @pImagen, peso = @pPeso WHERE @pId = id ');
+      .input("pHistoria", sql.VarChar, personaje.hisotria)
+      .query('UPDATE Personajes SET nombre = @pNombre, edad = @pEdad, imagen = @pImagen, peso = @pPeso, historia=@pHistoria, WHERE @pId = id');
 
     return results;
   }
