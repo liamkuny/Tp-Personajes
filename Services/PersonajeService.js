@@ -2,23 +2,20 @@ import sql from 'mssql';
 import configDB from '../Models/configDB.js';
 
 export class PersonajeService {
-  getList = async () => {
+
+  getAll = async () => {
     const conn = await sql.connect(configDB);
     const results = await conn.request().query('SELECT id,imagen,nombre FROM Personajes');
     return results.recordset;
   }
 
-  getDetailsbyId = async (id) => {
+  getById = async (id) => {
     const conn = await sql.connect(configDB);
-    const results = await conn.request().input("pId", id).query('SELECT * FROM Personajes INNER JOIN TablaRelacional on Personajes.id=id_personajes WHERE @pId=id');  //arreglar
-    return results.recordset;
-  }
-
-
-  getByNameAgeMovie = async (nombre, edad, id) => {
-    const conn = await sql.connect(configDB);
-    const results = await conn.request().input("pNombre", nombre, "pEdad", edad, "pId", id).query('SELECT * FROM Personajes INNER JOIN TablaRelacional on Personajes.id=id_personajes WHERE @pNombre =nombre || @pEdad=edad || @pNombre =nombre AND @pEdad=edad || @pId=id || @pNombre =nombre AND @pId=id || @pEdad=edad AND @pId=id || @pNombre =nombre AND @pEdad=edad AND @pId=id');
-    return results.recordset;
+    const results = await conn.request().input("pId", id).query('SELECT * FROM Personajes WHERE @pId=id');
+    const resultadoPelicula= await conn.request().input("pId", id).query('SELECT * FROM Peliculas INNER JOIN TablaRelacional ON Peliculas.id = TablaPersonaje.id_peliculas WHERE TablaRelacional.id_personajes = @pId');
+    const personaje=results.recordset[0];
+    personaje.peliculasAsociadas=resultadoPelicula.recordset;
+    return personaje;
   }
 
   insert = async (personaje) => {
@@ -38,15 +35,15 @@ export class PersonajeService {
 
   updateById = async (id, personaje) => {
     const conn = await sql.connect(configDB);
-    const results = await conn.request().input("pId", id)
+    const results = await conn.request().input("pId", sql.int,id)
       .input("pNombre", sql.VarChar, personaje.nombre)
       .input("pEdad", sql.Int, personaje.edad)
       .input("pImagen", sql.VarChar, personaje.imagen)
       .input("pPeso", sql.Float, personaje.peso)
       .input("pHistoria", sql.VarChar, personaje.hisotria)
-      .query('UPDATE Personajes SET nombre = @pNombre, edad = @pEdad, imagen = @pImagen, peso = @pPeso, historia=@pHistoria, WHERE @pId = id');
+      .query('UPDATE Personajes SET nombre = @pNombre, edad = @pEdad, imagen = @pImagen, peso = @pPeso, historia=@pHistoria, WHERE id =@pId ');
 
-    return results;
+    return results.recordset;
   }
 
 

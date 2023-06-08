@@ -6,7 +6,7 @@ const router = Router();
 const pelicula = new PeliculaService();
 
 router.get('', async (req, res) => {
-  const peliculas = await pelicula.getList();
+  const peliculas = await pelicula.getAll();
   return res.status(200).json(peliculas);
   
 });
@@ -17,12 +17,12 @@ router.get('/:id', async (req, res) => {
     {
         res.status(400).send()
     }
-    const per = await pelicula.getDetailsbyId(req.params.id);
-     if(personajeId[0]==null)
+    const peliculaId = await pelicula.getById(req.params.id);
+     if(peliculaId[0]==null)
      {
         res.status(404).send()
      }
-    return res.status(200).send(personajeId)
+    return res.status(200).send(peliculaId)
 });
 
 router.post('', async (req, res) => {

@@ -15,12 +15,12 @@ app.use("/characters", PersonajeRouter);
 app.use("/movies", PeliculaRouter);
 
 
+app.listen(port, () =>{
+    console.log(`Listening on port ${port}`)
+});
+
 /*
 passport.use()     //inicio
 app.use()
 */
 
-
-app.listen(port, () =>{
-    console.log(`Listening on port ${port}`)
-});

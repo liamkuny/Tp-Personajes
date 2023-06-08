@@ -5,7 +5,7 @@ const router = Router();
 const Personajes = new PersonajeService();
 
 router.get('', async (req, res) => {
-  const person = await Personajes.getList();
+  const person = await Personajes.getAll();
   return res.status(200).json(person);
 });
 
@@ -15,7 +15,7 @@ router.get('/:id', async (req, res) => {
     {
         res.status(400).send()
     }
-    const personajesId = await Personajes.getDetailsbyId(id);
+    const personajesId = await Personajes.getById(id);
      if(personajesId[0]==null)
      {
         res.status(404).send()
