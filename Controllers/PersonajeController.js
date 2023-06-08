@@ -5,7 +5,7 @@ const router = Router();
 const Personajes = new PersonajeService();
 
 router.get('', async (req, res) => {
-  const person = await Personajes.getAll();
+  const person = await Personajes.getList();
   return res.status(200).json(person);
 });
 

@@ -3,18 +3,44 @@ import configDB from '../Models/configDB.js';
 
 export class PersonajeService {
 
-  getAll = async () => {
+
+  getList = async (name, age, movies) => {
     const conn = await sql.connect(configDB);
-    const results = await conn.request().query('SELECT id,imagen,nombre FROM Personajes');
+    let query = 'SELECT id, imagen, nombre FROM Personajes'
+    let cont = 0
+
+    if (movies) {
+      cont++
+      query += ' INNER JOIN TablaRelacional ON Personajes.id = TablaRelacional.id_personajes WHERE id_peliculas = @pMovies'
+    }
+    if (name) {
+      if (cont > 0) {
+        query += ' AND'
+      }
+      query += ' WHERE nombre = @pName'
+      cont++
+    }
+    if (age) {
+      if (cont > 0) {
+        query += ' and'
+      }
+      query += ' WHERE edad = @pAge'
+    }
+
+    const results = await conn.request()
+      .input("pName", sql.VarChar, name)
+      .input("pAge", sql.Int, age)
+      .input("pMovies", sql.Int, movies)
+      .query(query)
     return results.recordset;
   }
 
   getById = async (id) => {
     const conn = await sql.connect(configDB);
     const results = await conn.request().input("pId", id).query('SELECT * FROM Personajes WHERE @pId=id');
-    const resultadoPelicula= await conn.request().input("pId", id).query('SELECT * FROM Peliculas INNER JOIN TablaRelacional ON Peliculas.id = TablaPersonaje.id_peliculas WHERE TablaRelacional.id_personajes = @pId');
-    const personaje=results.recordset[0];
-    personaje.peliculasAsociadas=resultadoPelicula.recordset;
+    const resultadoPelicula = await conn.request().input("pId", id).query('SELECT * FROM Peliculas INNER JOIN TablaRelacional ON Peliculas.id = TablaPersonaje.id_peliculas WHERE TablaRelacional.id_personajes = @pId');
+    const personaje = results.recordset[0];
+    personaje.peliculasAsociadas = resultadoPelicula.recordset;
     return personaje;
   }
 
@@ -35,7 +61,7 @@ export class PersonajeService {
 
   updateById = async (id, personaje) => {
     const conn = await sql.connect(configDB);
-    const results = await conn.request().input("pId", sql.int,id)
+    const results = await conn.request().input("pId", sql.int, id)
       .input("pNombre", sql.VarChar, personaje.nombre)
       .input("pEdad", sql.Int, personaje.edad)
       .input("pImagen", sql.VarChar, personaje.imagen)

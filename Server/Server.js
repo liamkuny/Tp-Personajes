@@ -6,7 +6,7 @@ import passport from "passport"   //inicio
 
 
 const app = express();
-const port=3000;
+const port=50527;
 
 
 app.use(cors());

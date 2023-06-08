@@ -6,7 +6,11 @@ const router = Router();
 const pelicula = new PeliculaService();
 
 router.get('', async (req, res) => {
-  const peliculas = await pelicula.getAll();
+
+  const title = req.query.title
+  const order = req.query.order
+  const peliculas = await pelicula.getList(title,order);
+
   return res.status(200).json(peliculas);
   
 });
