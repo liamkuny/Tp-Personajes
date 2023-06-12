@@ -5,7 +5,8 @@ const router = Router();
 const Personajes = new PersonajeService();
 
 router.get('', async (req, res) => {
-  const person = await Personajes.getList();
+  const {movies,name,age}=req.query
+  const person = await Personajes.getList(movies,name,age);
   return res.status(200).json(person);
 });
 

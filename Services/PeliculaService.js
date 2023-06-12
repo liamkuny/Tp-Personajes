@@ -22,10 +22,10 @@ export class PeliculaService {
   }
 
 
-  getbyId = async (id) => {
+  getById = async (id) => {
     const conn = await sql.connect(configDB);
     const results = await conn.request().input("pId", id).query('SELECT * FROM Peliculas WHERE @pId=id');
-    const resultadoPersonaje = await conn.request().input("pId", id).query('SELECT * FROM Personajes INNER JOIN TablaRelacional ON Personajes.id = TablaPersonaje.id_pesonajes WHERE TablaRelacional.id_peliculas = @pId');
+    const resultadoPersonaje = await conn.request().input("pId", id).query('SELECT nombre FROM Personajes INNER JOIN TablaRelacional ON Personajes.id = TablaRelacional.id_personajes WHERE TablaRelacional.id_peliculas = @pId');
     const pelicula = results.recordset[0];
     pelicula.personajesAsociados = resultadoPersonaje.recordset;
     return pelicula;
@@ -37,9 +37,9 @@ export class PeliculaService {
     const results = await conn.request()
       .input("pImagen", sql.VarChar, pelicula.imagen)
       .input("pTitulo", sql.VarChar, pelicula.titulo)
-      .input("pFechaCreacion", sql.Int, pelicula.fechaCreacion)
+      .input("pFechaCreacion", sql.DateTime, pelicula.fechaCreacion)
       .input("pCalificacion", sql.Float, pelicula.calificacion)
-      .query('INSERT INTO Peliculas (titulo, , imagen, peso) VALUES (@pNombre, @pEdad, @pImagen, @pPeso)');
+      .query('INSERT INTO Peliculas (imagen,titulo,fechaCreacion, calificacion) VALUES (@pImagen, @pTitulo, @pFechaCreacion,@pCalificacion)');
 
     return results.recordset;
   }
@@ -48,10 +48,10 @@ export class PeliculaService {
 
   updateById = async (id, pelicula) => {
     const conn = await sql.connect(configDB);
-    const results = await conn.request().input("pId", sql.int, id)
+    const results = await conn.request().input("pId", sql.Int, id)
       .input("pImagen", sql.VarChar, pelicula.imagen)
       .input("pTitulo", sql.VarChar, pelicula.titulo)
-      .input("pFechaCreacion", sql.Int, pelicula.fechaCreacion)
+      .input("pFechaCreacion", sql.DateTime, pelicula.fechaCreacion)
       .input("pCalificacion", sql.Float, pelicula.calificacion)
       .query('UPDATE Peliculas SET imagen = @pImagen, titulo = @pTitulo, fechaCreacion = @pFechaCreacion, calificacion = @pCalificacion WHERE @pId = id ');
     return results.recordset;

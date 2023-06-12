@@ -17,15 +17,8 @@ router.get('', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   const id = req.params.id
-    if(id<1)
-    {
-        res.status(400).send()
-    }
-    const peliculaId = await pelicula.getById(req.params.id);
-     if(peliculaId[0]==null)
-     {
-        res.status(404).send()
-     }
+    const peliculaId = await pelicula.getById(id);
+    console.log(peliculaId)
     return res.status(200).send(peliculaId)
 });
 
@@ -36,31 +29,16 @@ router.post('', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   const id = req.params.id
-  if(id!=req.body.Id)
-  {
-    res.status(400).send()
-  }
-  const peliculaCambiada = await pelicula.updateById(req.body);
-  if(peliculaCambiada.rowsAffected[0]==0)
-  {
-      res.status(404).send()
-  }
+  console.log(id)
+ 
+  const peliculaCambiada = await pelicula.updateById(id, req.body);
   return res.status(200).send(peliculaCambiada)
 });
 
 router.delete('/:id', async (req, res) => {
   
   const id = req.params.id
-  if(id<1)
-  {
-      res.status(400).send()
-  }
-  const peliculaEliminada = await pelicula.deleteById(req.params.id);
-
-  if(peliculaEliminada.rowsAffected[0]==0)
-  {
-      res.status(404).send()
-  }
+  const peliculaEliminada = await pelicula.deleteById(id);
   return res.status(200).send(peliculaEliminada)
 });
 
