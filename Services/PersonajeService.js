@@ -4,14 +4,24 @@ import configDB from '../Models/configDB.js';
 export class PersonajeService {
 
 
-  getList = async (name, age, movies) => {
+  getList = async (movies,name,age) => {
     const conn = await sql.connect(configDB);
-    let query = 'SELECT id, imagen, nombre FROM Personajes'
+    let query = 'SELECT Personajes.id, imagen, nombre FROM Personajes'
     let cont = 0
 
     const request = conn.request()
+    if (movies) {
+        query += ' INNER JOIN TablaRelacional ON Personajes.id = TablaRelacional.id_personajes WHERE TablaRelacional.id_peliculas = @pMovies'
+      request.input("pMovies", sql.Int, movies)
+      cont++
+    }
     if (name) {
-      query += ' WHERE nombre = @pName'
+      if (cont > 0) {
+        query += ' AND'
+      } else {
+        query += ' WHERE'
+      }
+      query += ' nombre = @pName'
       request.input("pName", sql.VarChar, name)
       cont++
     }
@@ -21,21 +31,11 @@ export class PersonajeService {
       } else {
         query += ' WHERE'
       }
-      request.input("pAge", sql.Int, age)
-      query += 'edad = @pAge'
-      cont++
+      query += ' edad = @pAge'
+      request.input("pAge", sql.Int, age) 
       
     }
-    if (movies) {
-      if (cont > 0) {
-        query += ' AND'
-      } else {
-        query += ' WHERE'
-      }
-      query += ' id_peliculas = @pMovies'
-      request.input("pMovies", sql.Int, movies)
-      cont++
-    }
+    console.log(query)
 
     const results = await request.query(query)
     return results.recordset;
@@ -47,7 +47,9 @@ getById = async (id) => {
   const results = await conn.request().input("pId", id).query('SELECT * FROM Personajes WHERE @pId=id');
   const resultadoPelicula = await conn.request().input("pId", id).query('SELECT titulo FROM Peliculas INNER JOIN TablaRelacional ON Peliculas.id = TablaRelacional.id_peliculas WHERE TablaRelacional.id_personajes = @pId');
   const personaje = results.recordset[0];
+  console.log(personaje)
   personaje.peliculasAsociadas = resultadoPelicula.recordset;
+  console.log(personaje.peliculasAsociadas)
   return personaje;
 }
 
