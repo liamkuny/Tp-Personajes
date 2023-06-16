@@ -5,18 +5,22 @@ const router = Router();
 const Personajes = new PersonajeService();
 
 router.get('', async (req, res) => {
-  const movies=req.query.movies
-  const name =req.query.name
-  const age =req.query.age
-  const person = await Personajes.getList(movies,name,age);
+const person = await Personajes.getList(req);
   return res.status(200).json(person);
 });
 
 router.get('/:id', async (req, res) => {
   const id = req.params.id
-    const personajesId = await Personajes.getById(id);
-    return res.status(200).send(personajesId)
-  
+  if (id < 1) {
+    res.status(400).send()
+  }
+  const personajesId = await Personajes.getById(id);
+  if (!personajesId) {
+    res.status(404).send()
+  }
+
+  return res.status(200).send(personajesId)
+
 });
 
 router.post('', async (req, res) => {
@@ -24,16 +28,32 @@ router.post('', async (req, res) => {
   return res.status(201).json(personajes);
 });
 
-router.put('/:id', async(req, res) => {
+router.put('/:id', async (req, res) => {
   const id = req.params.id
-  const personajeCambiado = await Personajes.updateById(id,req.body);
+
+  if (id < 1) {
+    res.status(400).send()
+  }
+  const personajeCambiado = await Personajes.updateById(id, req.body);
+  if (personajeCambiado.rowsAffected[0] == 0) {
+    return res.status(404).send()
+  }
+
   return res.status(200).send(personajeCambiado)
 })
 
 
 router.delete('/:id', async (req, res) => {
   const id = req.params.id
+
+  if (id < 1) {
+    res.status(400).send()
+  }
   const personajesEliminado = await Personajes.deleteById(id);
+  if (personajesEliminado.rowsAffected[0] == 0) {
+    return res.status(404).send()
+  }
+
   return res.status(200).send(personajesEliminado)
 });
 
