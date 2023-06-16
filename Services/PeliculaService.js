@@ -41,7 +41,7 @@ export class PeliculaService {
     const results = await conn.request()
       .input("pImagen", sql.VarChar, pelicula?.imagen?? " ")
       .input("pTitulo", sql.VarChar, pelicula?.titulo?? " ")
-      .input("pFechaCreacion", sql.DateTime, pelicula?.fechaCreacion?? 12/12/2012)
+      .input("pFechaCreacion", sql.DateTime, pelicula?.fechaCreacion?? 2012-12-22)
       .input("pCalificacion", sql.Float, pelicula?.calificacion?? 3)
       .query('INSERT INTO Peliculas (imagen,titulo,fechaCreacion, calificacion) VALUES (@pImagen, @pTitulo, @pFechaCreacion,@pCalificacion)');
 
