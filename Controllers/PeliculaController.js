@@ -3,42 +3,59 @@ import { PeliculaService } from '../Services/PeliculaService.js';
 
 
 const router = Router();
-const pelicula = new PeliculaService();
+const Pelicula = new PeliculaService();
 
 router.get('', async (req, res) => {
 
-  const title = req.query.title
-  const order = req.query.order
-  const peliculas = await pelicula.getList(title,order);
-
+  const peliculas = await Pelicula.getList(req);
   return res.status(200).json(peliculas);
   
 });
 
 router.get('/:id', async (req, res) => {
   const id = req.params.id
-    const peliculaId = await pelicula.getById(id);
-    console.log(peliculaId)
-    return res.status(200).send(peliculaId)
+  if (id < 1) {
+    res.status(400).send()
+  }
+  const peliculasId = await Pelicula.getById(id);
+  if (!peliculasId) {
+    res.status(404).send()
+  }
+
+  return res.status(200).send(peliculasId)
 });
 
 router.post('', async (req, res) => {
-  const peliculas = await pelicula.insert(req.body);
+  const peliculas = await Pelicula.insert(req.body);
   return res.status(201).json(peliculas);
 });
 
 router.put('/:id', async (req, res) => {
   const id = req.params.id
-  console.log(id)
- 
-  const peliculaCambiada = await pelicula.updateById(id, req.body);
+
+  if (id < 1) {
+    res.status(400).send()
+  }
+  const peliculaCambiada = await Pelicula.updateById(id, req.body);
+  if (peliculaCambiada.rowsAffected[0] == 0) {
+    return res.status(404).send()
+  }
+
   return res.status(200).send(peliculaCambiada)
 });
 
 router.delete('/:id', async (req, res) => {
   
   const id = req.params.id
-  const peliculaEliminada = await pelicula.deleteById(id);
+
+  if (id < 1) {
+    res.status(400).send()
+  }
+  const peliculaEliminada = await Pelicula.deleteById(id);
+  if (peliculaEliminada.rowsAffected[0] == 0) {
+    return res.status(404).send()
+  }
+
   return res.status(200).send(peliculaEliminada)
 });
 

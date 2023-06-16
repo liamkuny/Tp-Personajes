@@ -65,9 +65,6 @@ export class PersonajeService {
     if (personaje != undefined) {
       personaje.peliculasAsociadas = resultadoPelicula.recordset;
     }
-
-
-
     return personaje;
   }
 
