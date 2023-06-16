@@ -30,7 +30,7 @@ export class PeliculaService {
     const resultadoPersonaje = await conn.request().input("pId", id).query('SELECT nombre FROM Personajes INNER JOIN TablaRelacional ON Personajes.id = TablaRelacional.id_personajes WHERE TablaRelacional.id_peliculas = @pId');
     const pelicula = results.recordset[0];
     if (pelicula != undefined) {
-      pelicula.peliculasAsociadas = resultadoPersonaje.recordset;
+       pelicula.PersonajesAsociados = resultadoPersonaje.recordset;
     }
     return pelicula;
   }
