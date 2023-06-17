@@ -33,11 +33,7 @@ export class PeliculaService {
     const resultadoPersonaje = await conn.request().input("pId", id).query('SELECT nombre FROM Personajes INNER JOIN TablaRelacional ON Personajes.id = TablaRelacional.id_personajes WHERE TablaRelacional.id_peliculas = @pId');
     const pelicula = results.recordset[0];
     if (pelicula != undefined) {
-<<<<<<< HEAD
       pelicula.PersonajesAsociados = resultadoPersonaje.recordset;
-=======
-       pelicula.PersonajesAsociados = resultadoPersonaje.recordset;
->>>>>>> 5f40e892bb192e5009c326195487a3bfd849a44b
     }
     return pelicula;
   }
@@ -48,11 +44,7 @@ export class PeliculaService {
     const results = await conn.request()
       .input("pImagen", sql.VarChar, pelicula?.imagen?? " ")
       .input("pTitulo", sql.VarChar, pelicula?.titulo?? " ")
-<<<<<<< HEAD
       .input("pFechaCreacion", sql.Date, pelicula?.fechaCreacion?? 0 )
-=======
-      .input("pFechaCreacion", sql.DateTime, pelicula?.fechaCreacion?? 2012-12-22)
->>>>>>> 5f40e892bb192e5009c326195487a3bfd849a44b
       .input("pCalificacion", sql.Float, pelicula?.calificacion?? 3)
       .query('INSERT INTO Peliculas (imagen,titulo,fechaCreacion, calificacion) VALUES (@pImagen, @pTitulo, @pFechaCreacion,@pCalificacion)');
 
