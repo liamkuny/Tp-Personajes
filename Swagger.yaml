@@ -1,0 +1,169 @@
+openapi: 3.0.0
+info:
+  title: Testeando
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+paths:
+  /auth/login:
+    get:
+      tags:
+        - default
+      summary: Login
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /characters:
+    get:
+      tags:
+        - default
+      summary: GetList-Ch
+      parameters:
+        - name: name
+          in: query
+          schema:
+            type: string
+          example: John Wick
+        - name: movie
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: age
+          in: query
+          schema:
+            type: integer
+          example: '50'
+        - name: weigth
+          in: query
+          schema:
+            type: integer
+          example: '79'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - default
+      summary: Insert-Ch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                nombre: Insertando
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /characters/6:
+    get:
+      tags:
+        - default
+      summary: GetByID-Ch
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /characters/7:
+    put:
+      tags:
+        - default
+      summary: UpdateByID-Ch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                nombre: actualizado
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /characters/4:
+    delete:
+      tags:
+        - default
+      summary: DeleteById-Ch
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /movies:
+    get:
+      tags:
+        - default
+      summary: GetList-Mov
+      parameters:
+        - name: title
+          in: query
+          schema:
+            type: string
+          example: El Padrino
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - default
+      summary: Insert-Mov
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                nombre: Insertando
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /movies/3:
+    get:
+      tags:
+        - default
+      summary: GetByID-Mov
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /movies/1:
+    put:
+      tags:
+        - default
+      summary: UpdateById-Mov
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                nombre: actualizado
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - default
+      summary: DelteById-Mov
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
