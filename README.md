@@ -1,6 +1,6 @@
 # Mi Proyecto
 
-Este es un proyecto  Node, Nodemon, Express, MSSQL, passport, jwt, dotenv para crear una API. Este arhivo Proporciona información sobre cómo levantar el proyecto de manera local, los requisitos de instalación, configuraciones de variables de entorno, scripts de base de datos y cómo probar los endpoints creados.
+Este es un proyecto  Node, Nodemon, Express, MSSQL, passport, jwt, dotenv para crear una API. Este archivo Proporciona información sobre cómo levantar el proyecto de manera local, los requisitos de instalación, configuraciones de variables de entorno, scripts de base de datos y cómo probar los endpoints creados.
 
 
 ## Instalación
@@ -49,7 +49,7 @@ Nodemon iniciará tu aplicación y la supervisará en busca de cambios. Verás m
 
 Una vez que el proyecto esté en funcionamiento, puedes probar los endpoints creados utilizando Postman o Swagger. Aquí tienes los pasos a seguir:
 
-1. Abre Postman o Swagger.
+1. Abre [Postman](./Testeando.postman_collection.json) o [Swagger](/Swagger.yaml).
 
 2. Realiza una solicitud HTTP a la siguiente URL:
 
