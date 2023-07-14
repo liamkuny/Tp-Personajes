@@ -1,19 +1,17 @@
 # Mi Proyecto
 
-Este es un proyecto de ejemplo que utiliza Express y MS SQL Server para crear una API. Proporciona información sobre cómo levantar el proyecto de manera local, los requisitos de instalación, configuraciones de variables de entorno, scripts de base de datos y cómo probar los endpoints creados.
-
+Este es un proyecto  Node, Nodemon, Express, MSSQL, passport, jwt, dotenv para crear una API. Este arhivo Proporciona información sobre cómo levantar el proyecto de manera local, los requisitos de instalación, configuraciones de variables de entorno, scripts de base de datos y cómo probar los endpoints creados.
 
 
 ## Instalación
 
 1. Clona este repositorio en tu máquina local:
 
-git clone <url_del_repositorio>
+git clone <https://github.com/liamkuny/Tp-Personajes.git>
 
 
-Reemplaza `<url_del_repositorio>` por la URL del repositorio clonado de Github "https://github.com/liamkuny/Tp-Personajes.git".
 
-2. Abre una terminal o línea de comandos y navega hasta el directorio raíz del proyecto.
+2. Abre una terminal o línea de comandos y navega hasta el proyecto Tp-Personajes (Cd Tp-Personajes).
 
 3. Ejecuta el siguiente comando para instalar las dependencias necesarias:
 
@@ -37,41 +35,26 @@ Asegúrate de reemplazar `nombre_del_servidor`, por el "Server Name" que te da a
 
 ## Levantar el proyecto de manera local
 
-Para levantar el proyecto y hacerlo funcionar de manera local, sigue estos pasos:
+Para levantar el proyecto y hacerlo funcionar de manera local, sigue este paso:
 
-1. Asegúrate de tener una base de datos MS SQL Server configurada y accesible.
 
-2. Asegúrate de haber configurado correctamente las variables de entorno en el archivo `.env`.
+1. Si hiciste bien los pasos anteriores solo deberas ejecutar el siguiente comando para iniciar el proyecto con Nodemon:
 
-3. Ejecuta el siguiente comando para iniciar el proyecto con Nodemon:
+npm run start
 
-npm start
-
-markdown
-Copy code
 
 Nodemon iniciará tu aplicación y la supervisará en busca de cambios. Verás mensajes en la terminal que indican que Nodemon está en funcionamiento y el servidor se ha iniciado correctamente.
 
 ## Probar los endpoints
 
-Una vez que el proyecto esté en funcionamiento, puedes probar los endpoints creados utilizando una herramienta como Postman o cURL. Aquí tienes los pasos a seguir:
+Una vez que el proyecto esté en funcionamiento, puedes probar los endpoints creados utilizando Postman o Swagger. Aquí tienes los pasos a seguir:
 
-1. Abre Postman o cualquier otra herramienta similar.
+1. Abre Postman o Swagger.
 
 2. Realiza una solicitud HTTP a la siguiente URL:
 
 http://localhost:3000/ruta_del_endpoint
 
-markdown
-Copy code
-
 Reemplaza `ruta_del_endpoint` por la ruta del endpoint que deseas probar.
 
-3. Verifica las respuestas y los resultados obtenidos.
-
-¡Listo! Ahora puedes levantar el proyecto de manera local, probar los endpoints y realizar las modificaciones necesarias según tus requerimientos.
-
-## Licencia
-
-Este proyecto está bajo la licencia ISC. Consulta el archivo [LICENSE](LICENSE) para obtener más detalles.
-Recuerda reemplazar <url_del_repositorio> con la URL correcta del repositorio y revisar los pasos y configuraciones según tus necesidades específicas.
+3. ¡Listo! Ahora puedes levantar el proyecto de manera local, probar los endpoints y realizar las modificaciones necesarias según tus requerimientos.
